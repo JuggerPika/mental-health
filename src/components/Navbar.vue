@@ -8,7 +8,7 @@
 			<img src="./../assets/menu.svg" alt="Menu" />
 		</a>
 
-		<h2>{{ currentPageTitle }}</h2>
+		<h2>Курси</h2>
 
 		<a href="#" class="account-btn">
 			<img src="./../assets/account.svg" alt="Account" />

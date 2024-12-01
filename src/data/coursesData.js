@@ -22,6 +22,7 @@ import relationship1 from "../assets/relationship1.jpg";
 import relationship2 from "../assets/relationship2.jpg";
 import relationship3 from "../assets/relationship3.jpg";
 import relationship4 from "../assets/relationship4.jpg";
+import war1Audio from "../assets/help.mp3";
 
 export const sections = [
 	{
@@ -35,6 +36,7 @@ export const sections = [
 				description: "Контент для Подолання травми",
 				clickable: true,
 				completed: false,
+				music: war1Audio,
 			},
 			{
 				id: "2",

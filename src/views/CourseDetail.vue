@@ -1,6 +1,5 @@
 <template>
 	<div class="course-detail">
-		<h1>{{ course?.title || "Course Not Found" }}</h1>
 		<img
 			v-if="course?.image"
 			:src="course.image"
@@ -9,8 +8,7 @@
 		/>
 		<p v-if="course?.description">{{ course.description }}</p>
 		<div v-if="course">
-			<button @click="playMusic">Play</button>
-			<button @click="pauseMusic">Pause</button>
+			<button @click="startPlaying">Play</button>
 		</div>
 		<div v-if="course">
 			<input
@@ -26,15 +24,12 @@
 
 <script>
 import { sections } from "../data/coursesData";
-import { Howl } from "howler";
-import Mic from "../assets/help.mp3";
 
 export default {
 	name: "CourseDetail",
 	data() {
 		return {
 			course: null,
-			sound: null,
 		};
 	},
 	created() {
@@ -46,12 +41,6 @@ export default {
 		if (!this.course) {
 			this.$router.replace("/404");
 		}
-
-		// Initialize sound
-		this.sound = new Howl({
-			src: [Mic],
-			html5: true, // Ensures compatibility across devices
-		});
 	},
 	methods: {
 		/**
@@ -70,20 +59,20 @@ export default {
 		},
 
 		/**
-		 * Play sound
+		 * Start playing the audio and notify App.vue
 		 */
-		playMusic() {
-			if (this.sound) {
-				this.sound.play();
-			}
-		},
-
-		/**
-		 * Pause sound
-		 */
-		pauseMusic() {
-			if (this.sound) {
-				this.sound.pause();
+		startPlaying() {
+			if (this.course && this.course.music) {
+				// Передаємо трек у батьківський компонент
+				this.$emit("play-track", {
+					title: this.course.title,
+					artist: "Unknown Artist",
+					image: this.course.image,
+					src: this.course.music, // Шлях до аудіо
+					duration: 300, // Симуляція тривалості
+				});
+			} else {
+				console.error("Audio file not found for this course.");
 			}
 		},
 	},
@@ -102,10 +91,9 @@ export default {
 .course-image {
 	width: 100%;
 	height: auto;
-	max-width: 400px;
-	margin: 20px auto;
-	border-radius: 10px;
-	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	max-width: 300px;
+	margin: 0px auto;
+	border-radius: 25px;
 }
 
 button {
