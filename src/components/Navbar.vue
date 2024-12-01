@@ -5,13 +5,13 @@
 
 	<nav class="nav">
 		<a href="#" class="menu-btn" @click="toggleMenu">
-			<img src="./../assets/menu.svg" alt="Menu" />
+			<img src="./../assets/menu-svgrepo-com.svg" alt="Menu" />
 		</a>
 
 		<h2>Курси</h2>
 
 		<a href="#" class="account-btn">
-			<img src="./../assets/account.svg" alt="Account" />
+			<img src="./../assets/account-svgrepo-com.svg" alt="Account" />
 		</a>
 
 		<ul class="menu" :class="{ active: isMenuOpen }">
@@ -74,7 +74,7 @@ export default {
 
 		position: absolute;
 		z-index: 1;
-		top: 0;
+		top: -20px;
 		left: 0;
 		width: 100%;
 		height: 100%;
@@ -109,7 +109,6 @@ ul {
 	margin: 0;
 	background-color: #fff;
 	border-radius: 5px;
-	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .menu.active {
@@ -120,17 +119,18 @@ ul {
 	max-width: 550px;
 	left: 0;
 	z-index: 10;
+	padding: 10px 0;
 }
 
 .menu-btn img {
-	width: 36px;
-	height: 36px;
+	width: 35px;
+	height: 35px;
 	cursor: pointer;
 }
 
 .account-btn img {
-	width: 42px;
-	height: 42px;
+	width: 30px;
+	height: 30px;
 	cursor: pointer;
 }
 

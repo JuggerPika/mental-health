@@ -11,7 +11,12 @@
 				<img :src="track.image" alt="Album cover" class="audio-cover" />
 				<div class="audio-details">
 					<h3>{{ track.title }}</h3>
-					<p>{{ track.artist }}</p>
+					<div class="audio-time">
+						<span
+							>{{ formattedCurrentTime }} /
+							{{ formattedDuration }}</span
+						>
+					</div>
 				</div>
 			</div>
 			<div class="audio-controls">
@@ -21,6 +26,7 @@
 			</div>
 		</div>
 	</div>
+	<div style="padding-bottom: 100px"></div>
 </template>
 
 <script>
@@ -39,6 +45,12 @@ export default {
 		progressPercentage() {
 			return (this.track.currentTime / this.track.duration) * 100 || 0;
 		},
+		formattedCurrentTime() {
+			return this.formatTime(this.track.currentTime);
+		},
+		formattedDuration() {
+			return this.formatTime(this.track.duration);
+		},
 	},
 	data() {
 		return {
@@ -52,6 +64,16 @@ export default {
 
 		show() {
 			this.visible = true;
+		},
+
+		hiden() {
+			this.visible = false;
+		},
+
+		formatTime(time) {
+			const minutes = Math.floor(time / 60);
+			const seconds = Math.floor(time % 60);
+			return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
 		},
 
 		seekTrack(event) {
@@ -76,27 +98,29 @@ export default {
 <style scoped>
 .audio-bar {
 	position: fixed;
-	bottom: 0;
+	bottom: -1px;
 	left: 0;
 	width: 100%;
-	height: 100px;
+	height: 84px;
 	background-color: #fff;
 	color: black;
 	display: flex;
 	flex-direction: column;
 	box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
 	z-index: 1000;
+	transition: 333ms ease-in-out;
 }
 
 button {
 	border: none;
 	background-color: white;
+	font-size: 28px;
 }
 
 .for-bar {
 	display: flex;
 	justify-content: space-between;
-	padding: 20px;
+	padding: 8px 20px 6px 20px;
 }
 
 .audio-info {
@@ -125,13 +149,18 @@ button {
 .progress-container {
 	width: 100%;
 	height: 4px;
-	background: #fff;
+	background: grey;
 	overflow: hidden;
+	transition: 200ms ease;
+}
+
+.progress-container:hover {
+	height: 8px;
 }
 
 .progress {
 	height: 100%;
-	background-color: #ffcc00;
+	background-color: black;
 	transition: width 0.3s ease;
 }
 </style>

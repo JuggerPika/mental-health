@@ -35,7 +35,7 @@ export default {
 	background-position: center;
 	background-size: contain;
 	background-repeat: no-repeat;
-	border-radius: 20px;
+	border-radius: 10px;
 	display: flex;
 	align-items: flex-end;
 	justify-content: center;
