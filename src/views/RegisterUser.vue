@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { auth } from "../data/firebase";
+import { auth } from "../data/.firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 
 export default {

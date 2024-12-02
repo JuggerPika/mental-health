@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { auth } from "../data/firebase"; // Імпортуємо Firebase
+import { auth } from "../data/.firebase"; // Імпортуємо Firebase
 import { onAuthStateChanged } from "firebase/auth"; // Імпортуємо необхідну функцію з Firebase
 
 export default {

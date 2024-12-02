@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { auth } from "../data/firebase";
+import { auth } from "../data/.firebase";
 import { sendPasswordResetEmail } from "firebase/auth";
 
 export default {

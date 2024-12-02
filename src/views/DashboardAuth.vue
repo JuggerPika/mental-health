@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { auth } from "../data/firebase";
+import { auth } from "../data/.firebase";
 import { signOut } from "firebase/auth";
 import { onAuthStateChanged } from "firebase/auth";
 

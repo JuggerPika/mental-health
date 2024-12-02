@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { auth } from "../data/firebase";
+import { auth } from "../data/.firebase";
 import {
 	signInWithEmailAndPassword,
 	sendPasswordResetEmail,
