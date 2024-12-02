@@ -1,28 +1,39 @@
 <template>
-	<div class="close">
-		<h2>Error</h2>
+	<div>
+		<div class="close">
+			<h2>Error</h2>
+		</div>
+
+		<nav class="nav">
+			<a href="#" class="menu-btn" @click="toggleMenu">
+				<img src="./../assets/menu-svgrepo-com.svg" alt="Menu" />
+			</a>
+
+			<h2>{{ currentPageTitle }}</h2>
+
+			<!-- Якщо користувач не авторизований, відображаємо кнопку реєстрації/входу -->
+			<router-link v-if="!user" class="account-btn" to="/login">
+				<img src="./../assets/account-svgrepo-com.svg" alt="Account" />
+			</router-link>
+
+			<!-- Якщо користувач авторизований, показуємо кнопку для переходу на Dashboard -->
+			<router-link v-if="user" class="account-btn" to="/dashboard">
+				<img src="./../assets/account-svgrepo-com.svg" alt="Account" />
+			</router-link>
+
+			<ul class="menu" :class="{ active: isMenuOpen }">
+				<li><router-link to="/courses">Курси</router-link></li>
+				<li><router-link to="/community">Прогресс</router-link></li>
+				<li><router-link to="/resources">Ресурси</router-link></li>
+			</ul>
+		</nav>
 	</div>
-
-	<nav class="nav">
-		<a href="#" class="menu-btn" @click="toggleMenu">
-			<img src="./../assets/menu-svgrepo-com.svg" alt="Menu" />
-		</a>
-
-		<h2>Курси</h2>
-
-		<a href="#" class="account-btn">
-			<img src="./../assets/account-svgrepo-com.svg" alt="Account" />
-		</a>
-
-		<ul class="menu" :class="{ active: isMenuOpen }">
-			<li><router-link to="/courses">Курси</router-link></li>
-			<li><router-link to="/community">Прогресс</router-link></li>
-			<li><router-link to="/resources">Ресурси</router-link></li>
-		</ul>
-	</nav>
 </template>
 
 <script>
+import { auth } from "../data/firebase"; // Імпортуємо Firebase
+import { onAuthStateChanged } from "firebase/auth"; // Імпортуємо необхідну функцію з Firebase
+
 export default {
 	name: "AppNavbar",
 	data() {
@@ -34,6 +45,7 @@ export default {
 			},
 			currentPageTitle: "",
 			isMenuOpen: false,
+			user: null, // Додаємо змінну для зберігання користувача
 		};
 	},
 	watch: {
@@ -43,6 +55,7 @@ export default {
 	},
 	created() {
 		this.updatePageTitle(this.$route.path);
+		this.checkUserAuth(); // Перевірка авторизації при створенні компонента
 	},
 	methods: {
 		updatePageTitle(path) {
@@ -51,11 +64,17 @@ export default {
 		toggleMenu() {
 			this.isMenuOpen = !this.isMenuOpen;
 		},
+		checkUserAuth() {
+			// Перевірка авторизації користувача
+			onAuthStateChanged(auth, (user) => {
+				this.user = user; // Якщо користувач авторизований, зберігаємо його дані
+			});
+		},
 	},
 };
 </script>
 
-<style>
+<style scoped>
 * {
 	margin: 0;
 	padding: 0;
@@ -72,12 +91,12 @@ export default {
 		justify-content: center;
 		align-items: center;
 
-		position: absolute;
+		position: fixed;
 		z-index: 1;
 		top: -20px;
 		left: 0;
 		width: 100%;
-		height: 100%;
+		height: 120%;
 		background-color: red;
 
 		font-size: 64px;
@@ -88,9 +107,7 @@ export default {
 		z-index: 5;
 	}
 }
-</style>
 
-<style scoped>
 .nav {
 	max-width: 500px;
 	margin: 0 auto;
