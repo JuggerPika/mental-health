@@ -1,6 +1,5 @@
 <template>
 	<div>
-		<h2>Відновлення пароля</h2>
 		<form @submit.prevent="sendResetEmail">
 			<div>
 				<label for="email">Електронна пошта:</label>

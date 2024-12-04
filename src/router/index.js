@@ -14,11 +14,6 @@ const routes = [
 	{ path: "/resources", component: Resources },
 	{ path: "/", redirect: "/courses" },
 	{
-		path: "/courses/:id",
-		name: "CourseDetail",
-		component: CourseDetail,
-	},
-	{
 		path: "/register", // Маршрут для реєстрації
 		name: "Register",
 		component: Register,
@@ -37,6 +32,13 @@ const routes = [
 		path: "/forgot-password", // Маршрут для скидання пароля
 		name: "ForgotPassword",
 		component: ForgotPassword,
+	},
+	{
+		path: "/courses/:id",
+		name: "CourseDetail",
+		component: CourseDetail,
+		meta: { title: "Деталі Курсу" },
+		props: true,
 	},
 ];
 

@@ -20,6 +20,7 @@
 				v-model="course.completed"
 				:id="'course-' + course.id"
 				:disabled="!course.clickable"
+				@change="toggleCourseCompletion(course)"
 			/>
 			<label :for="'course-' + course.id">Позначити завершиним</label>
 		</div>
@@ -32,6 +33,7 @@
 
 <script>
 import { sections } from "../data/coursesData";
+import { mapState, mapActions } from "vuex";
 
 export default {
 	name: "CourseDetail",
@@ -39,6 +41,11 @@ export default {
 		return {
 			course: null,
 		};
+	},
+	computed: {
+		...mapState({
+			courses: (state) => state.courses.allCourses,
+		}),
 	},
 	created() {
 		const id = this.$route.params.id;
@@ -73,6 +80,14 @@ export default {
 		},
 		goBack() {
 			this.$router.back();
+		},
+
+		...mapActions(["updateCourseStatus"]),
+		toggleCourseCompletion(course) {
+			this.updateCourseStatus({
+				id: course.id,
+				completed: course.completed,
+			});
 		},
 	},
 };

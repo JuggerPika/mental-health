@@ -1,6 +1,5 @@
 <template>
 	<div>
-		<h2>Вхід</h2>
 		<form @submit.prevent="login">
 			<div>
 				<label for="email">Електронна пошта:</label>

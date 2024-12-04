@@ -29,6 +29,29 @@ import war1Audio from "../assets/help.mp3";
 // import emotionsAudio from "../assets/emotions.mp3";
 // import relationshipAudio from "../assets/relationship.mp3";
 
+const mutations = {
+	SET_COURSES(state, courses) {
+		state.allCourses = courses;
+	},
+	UPDATE_COURSE_STATUS(state, { id, completed }) {
+		const course = state.allCourses.find((course) => course.id === id);
+		if (course) {
+			course.completed = completed;
+		}
+	},
+};
+
+const getters = {
+	completedCourses: (state) =>
+		state.allCourses.filter((course) => course.completed),
+};
+
+export default {
+	namespaced: true,
+	mutations,
+	getters,
+};
+
 export const sections = [
 	{
 		title: "War",

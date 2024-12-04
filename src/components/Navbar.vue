@@ -38,8 +38,13 @@ export default {
 		return {
 			pageTitles: {
 				"/courses": "Курси",
-				"/community": "Прогресс",
+				"/progessView": "Прогрес",
 				"/resources": "Ресурси",
+				"/register": "Реєстрація",
+				"/login": "Вхід",
+				"/dashboard": "Профіль",
+				"/forgot-password": "Відновлення паролю",
+				"/courses/:id": "<3",
 			},
 			currentPageTitle: "",
 			isMenuOpen: false,
@@ -57,7 +62,7 @@ export default {
 	},
 	methods: {
 		updatePageTitle(path) {
-			this.currentPageTitle = this.pageTitles[path] || "Сторінка";
+			this.currentPageTitle = this.pageTitles[path] || "❤️";
 		},
 		toggleMenu() {
 			this.isMenuOpen = !this.isMenuOpen;
