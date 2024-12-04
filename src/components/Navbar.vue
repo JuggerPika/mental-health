@@ -11,19 +11,17 @@
 
 			<h2>{{ currentPageTitle }}</h2>
 
-			<!-- Якщо користувач не авторизований, відображаємо кнопку реєстрації/входу -->
 			<router-link v-if="!user" class="account-btn" to="/login">
 				<img src="./../assets/account-svgrepo-com.svg" alt="Account" />
 			</router-link>
 
-			<!-- Якщо користувач авторизований, показуємо кнопку для переходу на Dashboard -->
 			<router-link v-if="user" class="account-btn" to="/dashboard">
 				<img src="./../assets/account-svgrepo-com.svg" alt="Account" />
 			</router-link>
 
 			<ul class="menu" :class="{ active: isMenuOpen }">
 				<li><router-link to="/courses">Курси</router-link></li>
-				<li><router-link to="/community">Прогресс</router-link></li>
+				<li><router-link to="/progessView">Прогресс</router-link></li>
 				<li><router-link to="/resources">Ресурси</router-link></li>
 			</ul>
 		</nav>
@@ -31,8 +29,8 @@
 </template>
 
 <script>
-import { auth } from "../data/.firebase"; // Імпортуємо Firebase
-import { onAuthStateChanged } from "firebase/auth"; // Імпортуємо необхідну функцію з Firebase
+import { auth } from "../data/.firebase";
+import { onAuthStateChanged } from "firebase/auth";
 
 export default {
 	name: "AppNavbar",
@@ -45,7 +43,7 @@ export default {
 			},
 			currentPageTitle: "",
 			isMenuOpen: false,
-			user: null, // Додаємо змінну для зберігання користувача
+			user: null,
 		};
 	},
 	watch: {

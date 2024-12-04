@@ -15,6 +15,7 @@
 					v-for="(item, index) in section.items"
 					:key="item.id || `non-clickable-${sIndex}-${index}`"
 					:item="item"
+					:class="{ completed: item.completed }"
 				/>
 			</div>
 		</div>
@@ -40,7 +41,6 @@ export default {
 			const totalCourses = section.items.filter(
 				(item) => item.clickable
 			).length;
-
 			if (totalCourses === 0) return 0;
 
 			const completedCourses = section.items.filter(
@@ -85,6 +85,14 @@ export default {
 	gap: 10px;
 	overflow-x: auto;
 	z-index: 1001;
+}
+
+.horizontal-scroll-container .completed::after {
+	content: "Complete";
+	color: green;
+	display: flex;
+	justify-content: center;
+	padding-top: 5px;
 }
 
 .non-clickable {

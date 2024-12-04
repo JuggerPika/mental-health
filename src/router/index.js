@@ -1,16 +1,16 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Courses from "../views/Courses.vue";
-import Community from "../views/Community.vue";
+import Progress from "../views/ProgessView.vue";
 import Resources from "../views/Resources.vue";
 import CourseDetail from "../views/CourseDetail.vue";
 import Register from "../views/RegisterUser.vue";
 import Login from "../views/LoginUser.vue";
 import Dashboard from "../views/DashboardAuth.vue";
-import ForgotPassword from "../views/ForgotPassword.vue"; // Імпортуємо новий компонент для скидання пароля
+import ForgotPassword from "../views/ForgotPassword.vue";
 
 const routes = [
 	{ path: "/courses", component: Courses },
-	{ path: "/community", component: Community },
+	{ path: "/progessView", component: Progress },
 	{ path: "/resources", component: Resources },
 	{ path: "/", redirect: "/courses" },
 	{
@@ -34,7 +34,7 @@ const routes = [
 		component: Dashboard,
 	},
 	{
-		path: "/forgot-password", // Новий маршрут для скидання пароля
+		path: "/forgot-password", // Маршрут для скидання пароля
 		name: "ForgotPassword",
 		component: ForgotPassword,
 	},

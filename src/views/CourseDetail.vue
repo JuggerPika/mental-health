@@ -24,9 +24,9 @@
 			<label :for="'course-' + course.id">Позначити завершиним</label>
 		</div>
 
-		<a class="btn-return" @click="goBack" :style="buttonStyle"
-			><img src="../assets/return-svgrepo-com.svg" alt=""
-		/></a>
+		<a class="btn-return" @click="goBack">
+			<img src="../assets/return-svgrepo-com.svg" alt="" />
+		</a>
 	</div>
 </template>
 
@@ -71,7 +71,6 @@ export default {
 				console.error("Audio file not found for this course.");
 			}
 		},
-
 		goBack() {
 			this.$router.back();
 		},
