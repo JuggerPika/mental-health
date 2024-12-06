@@ -258,6 +258,18 @@ export default {
 };
 </script>
 
+<style>
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	overflow-x: hidden;
+}
+</style>
+
 <style scoped>
 * {
 	margin: 0;
@@ -271,15 +283,17 @@ a {
 
 .nav {
 	position: fixed;
-	bottom: -1px;
+	bottom: 0px;
+	left: 0px;
 	width: 100%;
 	background-color: white;
 	height: 60px;
 	display: flex;
 	justify-content: center;
-	gap: 35px;
+	gap: 50px;
 	padding: 10px;
 	box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+	overflow-x: hidden;
 }
 
 .nav a {

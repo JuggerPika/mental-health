@@ -8,6 +8,7 @@
 
 				<button @click="startPlaying">Слухати курс</button>
 			</div>
+			<div class="left-c"></div>
 			<h2>Про що курс</h2>
 			<p v-if="course?.description">{{ course.description }}</p>
 		</div>
@@ -102,41 +103,44 @@ export default {
 .our-course {
 	display: flex;
 	flex-direction: column;
+	align-items: start;
 }
 
 .our-course h2 {
 	margin-top: 20px;
+	font-size: 24px;
 }
 
 .our-course p {
-	margin: 10px 0 5px 0px;
-	font-size: 18px;
+	font-size: 14px;
 	text-align: left;
 }
 .course-image {
 	width: 100%;
 	height: auto;
 	max-width: 650px;
-	height: 200px;
+	height: 300px;
 	margin: 0px auto;
 	border-radius: 25px;
-	/* background-image: url("../assets/729337793887.jpg"); */
-	/* background-position: center; */
+	background-image: url("../assets/bg1.jpg");
+	background-position: center;
 	background-size: cover;
 	display: flex;
 	justify-content: end;
-	align-items: end;
+	align-items: start;
 	flex-direction: column;
 	padding: 20px;
+	text-align: left;
 }
 
 .course-image p {
-	color: #000;
+	color: white;
+	font-size: 16px;
 	display: flex;
 	justify-content: center;
 	width: 180px;
 	line-height: 22px;
-	text-align: right;
+	text-align: left;
 }
 
 button {
@@ -152,7 +156,8 @@ button {
 }
 
 button:hover {
-	background-color: #0056b3;
+	background-color: grey;
+	color: white;
 }
 
 input[type="checkbox"] {

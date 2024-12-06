@@ -113,6 +113,7 @@ export default {
 <style scoped>
 .dots {
 	padding-top: 90px;
+	transition: 333ms ease-in-out;
 }
 
 .dots.hidden {
@@ -122,7 +123,8 @@ export default {
 .hidden-bar {
 	position: fixed;
 	top: 89px;
-	right: 10px;
+	left: 50%;
+	transform: translateX(-50%);
 	text-decoration: none;
 	text-transform: uppercase;
 	font-size: 12px;
@@ -136,7 +138,7 @@ export default {
 }
 
 .hidden-bar.hidden {
-	top: 1px;
+	top: 0px;
 }
 
 .audio-bar {
@@ -155,7 +157,7 @@ export default {
 }
 
 .audio-bar.hidden {
-	top: -90px;
+	top: -100px;
 }
 
 button {

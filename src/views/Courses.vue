@@ -67,8 +67,9 @@ export default {
 	align-items: center;
 }
 
+.title h2,
 .title p {
-	font-size: 14px;
+	font-size: 16px;
 	margin: 10px;
 	font-weight: 500;
 }

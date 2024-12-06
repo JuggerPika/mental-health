@@ -2,6 +2,7 @@
 	<div class="main">
 		<div v-if="completedCourses.length > 0" class="title">
 			<h2>Завершені курси</h2>
+			<p>{{ getTotalProgress(sections) }}%</p>
 		</div>
 		<ul class="flex-container">
 			<li
@@ -23,17 +24,39 @@
 					/>
 				</router-link>
 			</li>
-
-			<div v-if="completedCourses.length === 0" class="no-courses">
-				<p>Поки не пройдено жодного курсу.</p>
-			</div>
 		</ul>
+		<div
+			v-if="completedCourses.length === 0"
+			class="no-courses"
+			style="
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				flex-direction: column;
+				height: 100%;
+			"
+		>
+			<p style="text-align: center; font-size: 18px; font-weight: 600">
+				Поки не пройдено жодного курсу.
+			</p>
+			<img
+				src="../assets/emptyProgres.gif"
+				alt="gif"
+				style="width: 400px"
+			/>
+		</div>
 	</div>
 </template>
 <script>
+import { sections } from "../data/coursesData";
 import { mapGetters } from "vuex";
 
 export default {
+	data() {
+		return {
+			sections,
+		};
+	},
 	computed: {
 		...mapGetters("courses", ["completedCourses"]),
 	},
@@ -41,6 +64,35 @@ export default {
 		item: {
 			type: Object,
 			required: true,
+		},
+	},
+
+	methods: {
+		getTotalProgress(sections) {
+			if (!sections || !Array.isArray(sections)) {
+				console.error("Sections is not a valid array:", sections);
+				return 0;
+			}
+
+			let totalCourses = 0;
+			let completedCourses = 0;
+
+			sections.forEach((section) => {
+				if (section.items && Array.isArray(section.items)) {
+					section.items.forEach((item) => {
+						if (item.clickable) {
+							totalCourses++;
+							if (item.completed) {
+								completedCourses++;
+							}
+						}
+					});
+				}
+			});
+
+			if (totalCourses === 0) return 0;
+
+			return Math.round((completedCourses / totalCourses) * 100);
 		},
 	},
 };
@@ -60,7 +112,6 @@ export default {
 .title h2,
 .title p {
 	font-size: 18px;
-	font-family: Arial, Helvetica, sans-serif;
 	margin: 10px;
 	font-weight: 500;
 }
@@ -72,6 +123,19 @@ export default {
 	gap: 10px;
 	padding: 10px 40px;
 	list-style: none;
+}
+
+@media (max-width: 370px) {
+	.flex-container {
+		padding: 10px 20px;
+	}
+}
+
+@media (max-width: 331px) {
+	.flex-container {
+		padding: 10px 0px;
+		justify-content: center;
+	}
 }
 
 .img-container::after {
