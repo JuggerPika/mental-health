@@ -1,5 +1,3 @@
-// src/store/modules/courses.js
-
 import { sections } from "../../data/coursesData.js";
 
 const state = {

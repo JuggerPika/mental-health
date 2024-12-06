@@ -1,7 +1,5 @@
 <template>
 	<div id="app">
-		<Navbar />
-		<router-view @play-track="playTrack" />
 		<AudioBar
 			v-if="currentTrack"
 			:track="currentTrack"
@@ -9,6 +7,8 @@
 			@toggle-play-pause="togglePlayPause"
 			@seek="seekTrack"
 		/>
+		<router-view @play-track="playTrack" />
+		<Navbar />
 	</div>
 </template>
 

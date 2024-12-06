@@ -68,27 +68,27 @@ export default {
 .flex-container {
 	display: flex;
 	flex-wrap: wrap;
-	justify-content: center;
-	gap: 20px;
-	padding: 0px 20px;
+	justify-content: space-between;
+	gap: 10px;
+	padding: 10px 40px;
 	list-style: none;
 }
 
 .img-container::after {
-	content: "Complete";
-	color: green;
+	content: "Завершенно";
+	color: black;
 	display: flex;
 	justify-content: center;
 	padding-top: 5px;
 }
 
 .images {
-	width: 150px;
-	height: 200px;
+	width: 120px;
+	height: 160px;
 }
 .images::after {
-	content: "Complete";
-	color: green;
+	content: "Завершенно";
+	color: black;
 	display: flex;
 	justify-content: center;
 	padding-top: 20px;

@@ -1,19 +1,17 @@
 <template>
 	<div class="course-detail">
 		<div class="our-course">
-			<img
-				v-if="course?.image"
-				:src="course.image"
-				:alt="course.title"
-				class="course-image"
-			/>
+			<div class="course-image" style="">
+				<div>
+					<p>{{ course.title }}</p>
+				</div>
+
+				<button @click="startPlaying">Слухати курс</button>
+			</div>
 			<h2>Про що курс</h2>
 			<p v-if="course?.description">{{ course.description }}</p>
 		</div>
 
-		<div v-if="course">
-			<button @click="startPlaying">Слухати курс</button>
-		</div>
 		<div v-if="course">
 			<input
 				type="checkbox"
@@ -24,10 +22,6 @@
 			/>
 			<label :for="'course-' + course.id">Позначити завершиним</label>
 		</div>
-
-		<a class="btn-return" @click="goBack">
-			<img src="../assets/return-svgrepo-com.svg" alt="" />
-		</a>
 	</div>
 </template>
 
@@ -105,14 +99,6 @@ export default {
 	align-items: start;
 }
 
-.course-image {
-	width: 100%;
-	height: auto;
-	max-width: 250px;
-	margin: 0px auto;
-	border-radius: 25px;
-}
-
 .our-course {
 	display: flex;
 	flex-direction: column;
@@ -123,19 +109,44 @@ export default {
 }
 
 .our-course p {
-	margin: 10px 0 20px 0px;
+	margin: 10px 0 5px 0px;
 	font-size: 18px;
 	text-align: left;
+}
+.course-image {
+	width: 100%;
+	height: auto;
+	max-width: 650px;
+	height: 200px;
+	margin: 0px auto;
+	border-radius: 25px;
+	/* background-image: url("../assets/729337793887.jpg"); */
+	/* background-position: center; */
+	background-size: cover;
+	display: flex;
+	justify-content: end;
+	align-items: end;
+	flex-direction: column;
+	padding: 20px;
+}
+
+.course-image p {
+	color: #000;
+	display: flex;
+	justify-content: center;
+	width: 180px;
+	line-height: 22px;
+	text-align: right;
 }
 
 button {
 	margin-bottom: 10px;
-	padding: 10px 20px;
+	padding: 10px 40px;
 	font-size: 16px;
 	border: none;
 	border-radius: 5px;
-	background-color: #007bff;
-	color: #fff;
+	background-color: #fff;
+	color: #000;
 	cursor: pointer;
 	transition: background-color 0.3s ease;
 }

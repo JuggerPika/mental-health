@@ -25,11 +25,10 @@
 			<p>{{ errorMessage }}</p>
 		</form>
 
-		<!-- Кнопка для переходу до форми реєстрації -->
 		<p>
 			Немає аккаунту? <router-link to="/register">Створити</router-link>
 		</p>
-		<!-- Кнопка для скидання пароля -->
+
 		<p>
 			<router-link to="/forgot-password" @click.prevent="forgotPassword">
 				Забули пароль?

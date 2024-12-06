@@ -57,8 +57,7 @@ export default {
 .f-section {
 	max-width: 550px;
 	margin: 0 auto;
-	margin: 0px 20px;
-	margin-bottom: 30px;
+	margin: 10px 20px;
 	z-index: 1;
 }
 
@@ -68,10 +67,8 @@ export default {
 	align-items: center;
 }
 
-.title h2,
 .title p {
-	font-size: 18px;
-	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
 	margin: 10px;
 	font-weight: 500;
 }
@@ -84,15 +81,15 @@ export default {
 	display: flex;
 	gap: 10px;
 	overflow-x: auto;
-	z-index: 1001;
 }
 
 .horizontal-scroll-container .completed::after {
-	content: "Complete";
-	color: green;
+	content: "Завершено";
+	color: black;
 	display: flex;
 	justify-content: center;
-	padding-top: 5px;
+	padding-top: 0px;
+	font-size: 14px;
 }
 
 .non-clickable {

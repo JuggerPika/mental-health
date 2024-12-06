@@ -1,5 +1,18 @@
 <template>
-	<div class="audio-bar" v-if="visible">
+	<div class="dots" :class="['dots', { hidden: isHidden }]">
+		<a
+			href="#"
+			@click.prevent="toggleAudioBar"
+			:class="['hidden-bar', { hidden: isHidden }]"
+			class="hidden-bar"
+			>{{ isHidden ? "show" : "hidden" }}</a
+		>
+	</div>
+	<div
+		class="audio-bar"
+		:class="['audio-bar', { hidden: isHidden }]"
+		v-if="(visible = true)"
+	>
 		<div class="progress-container" @click="seekTrack">
 			<div
 				class="progress"
@@ -21,16 +34,29 @@
 			</div>
 			<div class="audio-controls">
 				<button @click="togglePlayPause">
-					{{ isPlaying ? "⏸" : "▶️" }}
+					<img
+						:src="isPlaying ? pause : play"
+						alt="Play/Pause"
+						style="width: 30px"
+					/>
 				</button>
 			</div>
 		</div>
 	</div>
-	<div style="padding-bottom: 100px"></div>
 </template>
 
 <script>
+import play from "../assets/play.svg";
+import pause from "../assets/pause.svg";
+
 export default {
+	data() {
+		return {
+			isHidden: false,
+			play,
+			pause,
+		};
+	},
 	props: {
 		track: {
 			type: Object,
@@ -52,22 +78,10 @@ export default {
 			return this.formatTime(this.track.duration);
 		},
 	},
-	data() {
-		return {
-			visible: false,
-		};
-	},
+
 	methods: {
 		togglePlayPause() {
 			this.$emit("toggle-play-pause");
-		},
-
-		show() {
-			this.visible = true;
-		},
-
-		hiden() {
-			this.visible = false;
 		},
 
 		formatTime(time) {
@@ -88,39 +102,74 @@ export default {
 			// Відправляємо подію в App.vue
 			this.$emit("seek", newTime);
 		},
-	},
-	created() {
-		this.show();
+
+		toggleAudioBar() {
+			this.isHidden = !this.isHidden; // Перемикаємо видимість
+		},
 	},
 };
 </script>
 
 <style scoped>
+.dots {
+	padding-top: 90px;
+}
+
+.dots.hidden {
+	padding-top: 0px;
+}
+
+.hidden-bar {
+	position: fixed;
+	top: 89px;
+	right: 10px;
+	text-decoration: none;
+	text-transform: uppercase;
+	font-size: 12px;
+	background-color: grey;
+	color: white;
+	padding: 5px 10px;
+	border-radius: 0 0 10px 10px;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+	z-index: 1;
+	transition: 333ms ease-in-out;
+}
+
+.hidden-bar.hidden {
+	top: 1px;
+}
+
 .audio-bar {
 	position: fixed;
-	bottom: -1px;
+	top: 0;
 	left: 0;
 	width: 100%;
-	height: 84px;
+	height: 90px;
 	background-color: #fff;
 	color: black;
 	display: flex;
 	flex-direction: column;
-	box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 	z-index: 1000;
 	transition: 333ms ease-in-out;
+}
+
+.audio-bar.hidden {
+	top: -90px;
 }
 
 button {
 	border: none;
 	background-color: white;
-	font-size: 28px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .for-bar {
 	display: flex;
 	justify-content: space-between;
-	padding: 8px 20px 6px 20px;
+	padding: 10px 20px;
 }
 
 .audio-info {
@@ -137,6 +186,7 @@ button {
 
 .audio-details h3,
 .audio-details p {
+	font-size: 18px;
 	margin: 0;
 }
 

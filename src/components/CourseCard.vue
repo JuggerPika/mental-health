@@ -30,8 +30,8 @@ export default {
 <style scoped>
 .scroll-content {
 	position: relative;
-	height: 200px;
-	width: 150px;
+	height: 160px;
+	width: 120px;
 	background-position: center;
 	background-size: contain;
 	background-repeat: no-repeat;
