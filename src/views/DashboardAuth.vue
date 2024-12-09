@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { auth } from "../data/.firebase";
+import { auth } from "../firebase";
 import { signOut } from "firebase/auth";
 import { onAuthStateChanged } from "firebase/auth";
 
@@ -20,7 +20,7 @@ export default {
 	},
 	methods: {
 		async logout() {
-			await signOut(auth); // Вихід з системи
+			await signOut(auth); 
 			this.$router.push("/login"); // Перенаправлення на сторінку входу
 		},
 	},

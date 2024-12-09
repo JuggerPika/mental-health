@@ -39,7 +39,7 @@
 			<p>Курси</p>
 		</router-link>
 
-		<!-- PRGORES -->
+		<!-- PROGRES -->
 		<router-link to="/progessView" class="nav-item">
 			<svg
 				fill="grey"
@@ -76,7 +76,7 @@
 		</router-link>
 
 		<!-- RESOURSE -->
-		<router-link to="/resources" class="nav-item">
+		<router-link to="/webinarsView" class="nav-item">
 			<svg
 				fill="grey"
 				version="1.1"
@@ -210,45 +210,24 @@
 		</router-link>
 	</nav>
 
-	<div style="padding-bottom: 100px"></div>
+	<div class="dos"></div>
 </template>
 
 <script>
-import { auth } from "../data/.firebase";
+import { auth } from "../firebase";
 import { onAuthStateChanged } from "firebase/auth";
 
 export default {
 	name: "AppNavbar",
 	data() {
 		return {
-			pageTitles: {
-				"/courses": "Курси",
-				"/progessView": "Прогрес",
-				"/resources": "Ресурси",
-				"/register": "Реєстрація",
-				"/login": "Вхід",
-				"/dashboard": "Профіль",
-				"/forgot-password": "Відновлення паролю",
-				"/courses/:id": "<3",
-			},
-			currentPageTitle: "",
-			isMenuOpen: false,
 			user: null,
 		};
 	},
-	watch: {
-		$route(to) {
-			this.updatePageTitle(to.path);
-		},
-	},
 	created() {
-		this.updatePageTitle(this.$route.path);
 		this.checkUserAuth();
 	},
 	methods: {
-		updatePageTitle(path) {
-			this.currentPageTitle = this.pageTitles[path] || "❤️";
-		},
 		checkUserAuth() {
 			onAuthStateChanged(auth, (user) => {
 				this.user = user;
@@ -257,18 +236,6 @@ export default {
 	},
 };
 </script>
-
-<style>
-* {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-}
-
-body {
-	overflow-x: hidden;
-}
-</style>
 
 <style scoped>
 * {
@@ -324,5 +291,9 @@ a {
 .router-link-active p {
 	fill: black;
 	color: black;
+}
+
+.dos {
+	padding-bottom: 60px;
 }
 </style>

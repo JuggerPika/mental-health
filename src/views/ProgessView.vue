@@ -60,12 +60,6 @@ export default {
 	computed: {
 		...mapGetters("courses", ["completedCourses"]),
 	},
-	props: {
-		item: {
-			type: Object,
-			required: true,
-		},
-	},
 
 	methods: {
 		getTotalProgress(sections) {

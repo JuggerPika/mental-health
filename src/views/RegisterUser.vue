@@ -1,44 +1,39 @@
 <template>
 	<div class="reg-form">
 		<form @submit.prevent="register">
-			<h2>
-				Зареєструвати<br />
-				новий аккаунт
-			</h2>
+			<h2>Зареєструватися</h2>
 			<div>
-				<!-- <label for="email">Електронна пошта:</label> -->
 				<input
 					type="email"
 					v-model="email"
 					id="email"
-					placeholder="Введіть електронну пошту"
+					placeholder="Email"
 					required
 				/>
 			</div>
 			<div>
-				<!-- <label for="password">Пароль:</label> -->
 				<input
 					type="password"
 					v-model="password"
 					id="password"
-					placeholder="Введіть пароль"
+					placeholder="Password"
 					required
 				/>
 			</div>
 			<button type="submit">Зареєструватися</button>
 			<p>{{ errorMessage }}</p>
+			<p class="login-acc">
+				Є аккаунт? <router-link to="/login">Увійти</router-link>
+			</p>
 		</form>
-
-		<!-- Кнопка для переходу до форми входу -->
-		<p class="login-acc">
-			Є аккаунт? <router-link to="/login">Увійти</router-link>
-		</p>
 	</div>
 </template>
 
 <script>
-import { auth } from "../data/.firebase";
+import { auth } from "../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { fetchUserCourses } from "../services/firestoreService";
+import { sections } from "../data/coursesData";
 
 export default {
 	data() {
@@ -51,16 +46,21 @@ export default {
 	methods: {
 		async register() {
 			try {
-				// Реєстрація користувача
-				await createUserWithEmailAndPassword(
+				const userCredential = await createUserWithEmailAndPassword(
 					auth,
 					this.email,
 					this.password
 				);
-				// Перенаправлення на Dashboard після реєстрації
-				this.$router.push("/dashboard");
+				const user = userCredential.user;
+				const fetchedCourses = await fetchUserCourses(user.uid);
+				const finalCourses =
+					fetchedCourses.length > 0
+						? fetchedCourses
+						: sections.flatMap((s) => s.items);
+				this.$store.dispatch("courses/initCourses", finalCourses);
+				this.$router.push("/courses");
 			} catch (error) {
-				this.errorMessage = error.message; // Показуємо повідомлення про помилку
+				this.errorMessage = error.message;
 			}
 		},
 	},
@@ -69,17 +69,22 @@ export default {
 
 <style scoped>
 .reg-form {
-	height: 86vh;
+	height: 90vh;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
+	background-image: url("../assets//formbg.jpg");
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
 }
 
 .reg-form h2 {
 	font-size: 24px;
 	margin: 10px;
 	text-align: center;
+	color: #1c325b;
 }
 
 form {
@@ -87,9 +92,11 @@ form {
 	flex-direction: column;
 	justify-content: center;
 	padding: 20px 40px;
+	width: 340px;
 	border: 1px solid gainsboro;
 	border-radius: 20px;
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+	backdrop-filter: blur(3px);
 }
 
 form div {
@@ -102,11 +109,20 @@ form div input {
 	border: none;
 	outline: none;
 	font-size: 16px;
-	color: #777;
+	color: #1c325b;
 	font-weight: 300;
-	border-bottom: 1px solid black;
+
+	border: 1px solid #1c325b;
+	background-color: transparent;
+	padding: 4px 8px;
+	border-radius: 4px;
 
 	transition: 333ms ease-in-out;
+}
+
+form div input::placeholder {
+	color: white;
+	font-style: italic;
 }
 
 form button {
@@ -114,25 +130,35 @@ form button {
 	margin-top: 30px;
 	border-radius: 5px;
 	padding: 5px 0px;
-	background: lightskyblue;
+	background: #1c325b;
 	color: white;
 	transition: 333ms ease-in-out;
-	border: 1px solid lightskyblue;
+	border: 1px solid #1c325b;
 }
 
 form button:focus {
-	border: 1px solid lightskyblue;
-	color: lightskyblue;
+	border: 1px solid #1c325b;
+	color: transparent;
 	background-color: transparent;
 }
 
 form button:hover {
-	border: 1px solid black;
-	color: black;
+	border: 1px solid #1c325b;
+	color: #1c325b;
 	background-color: transparent;
 }
 
-.login-acc {
-	margin-top: 20px;
+.login-acc,
+.login-acc a {
+	color: white;
+	text-align: center;
+	font-size: 16px;
+	font-weight: 500;
+	text-decoration: none;
+}
+
+.login-acc a {
+	color: #ff8000;
+	font-weight: 600;
 }
 </style>

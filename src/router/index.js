@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Courses from "../views/Courses.vue";
 import Progress from "../views/ProgessView.vue";
-import Resources from "../views/Resources.vue";
+import Webinars from "../views/Webinars.vue";
 import CourseDetail from "../views/CourseDetail.vue";
 import Register from "../views/RegisterUser.vue";
 import Login from "../views/LoginUser.vue";
@@ -11,7 +11,7 @@ import ForgotPassword from "../views/ForgotPassword.vue";
 const routes = [
 	{ path: "/courses", component: Courses },
 	{ path: "/progessView", component: Progress },
-	{ path: "/resources", component: Resources },
+	{ path: "/webinarsView", component: Webinars },
 	{ path: "/", redirect: "/courses" },
 	{
 		path: "/register", // Маршрут для реєстрації

@@ -1,16 +1,15 @@
 <template>
 	<div class="course-detail">
 		<div class="our-course">
-			<div class="course-image" style="">
+			<div class="course-image">
 				<div>
-					<p>{{ course.title }}</p>
+					<p>{{ course?.title }}</p>
 				</div>
-
 				<button @click="startPlaying">Слухати курс</button>
 			</div>
 			<div class="left-c"></div>
 			<h2>Про що курс</h2>
-			<p v-if="course?.description">{{ course.description }}</p>
+			<p>{{ course.description }}</p>
 		</div>
 
 		<div v-if="course">
@@ -23,15 +22,18 @@
 			/>
 			<label :for="'course-' + course.id">Позначити завершиним</label>
 		</div>
+		<div v-else>
+			<p>Курс не знайдено</p>
+		</div>
 	</div>
 </template>
 
 <script>
-import { sections } from "../data/coursesData";
 import { mapState, mapActions } from "vuex";
+import { saveCourseData } from "../services/firestoreService";
+import { auth } from "../firebase";
 
 export default {
-	name: "CourseDetail",
 	data() {
 		return {
 			course: null,
@@ -41,25 +43,47 @@ export default {
 		...mapState({
 			courses: (state) => state.courses.allCourses,
 		}),
+		currentUser() {
+			return auth.currentUser;
+		},
 	},
 	created() {
 		const id = this.$route.params.id;
-		this.course = this.getCourseById(id);
 
-		if (!this.course) {
-			this.$router.replace("/404");
+		// Якщо список курсів ще не завантажений (наприклад, пустий масив), почекайте або використовуйте watch
+		if (this.courses.length === 0) {
+			// Можна почекати кілька мілісекунд (не найкраща практика) або перейти на інший хук
+			setTimeout(() => {
+				const course = this.courses.find((c) => c.id === id);
+				if (!course) {
+					this.$router.replace("/404");
+				} else {
+					this.course = course;
+				}
+			}, 500);
+		} else {
+			const course = this.courses.find((c) => c.id === id);
+			if (!course) {
+				this.$router.replace("/404");
+			} else {
+				this.course = course;
+			}
 		}
 	},
 	methods: {
-		getCourseById(id) {
-			for (const section of sections) {
-				const course = section.items.find((item) => item.id === id);
-				if (course) {
-					course.completed = course.completed ?? false;
-					return course;
+		...mapActions("courses", ["updateCourseStatus"]),
+		async toggleCourseCompletion(course) {
+			await this.updateCourseStatus({
+				id: course.id,
+				completed: course.completed,
+			});
+			if (this.currentUser && this.currentUser.uid) {
+				try {
+					await saveCourseData(this.currentUser.uid, course);
+				} catch (error) {
+					console.error("Error saving course data:", error);
 				}
 			}
-			return null;
 		},
 		startPlaying() {
 			if (this.course && this.course.music) {
@@ -72,17 +96,6 @@ export default {
 			} else {
 				console.error("Audio file not found for this course.");
 			}
-		},
-		goBack() {
-			this.$router.back();
-		},
-
-		...mapActions(["updateCourseStatus"]),
-		toggleCourseCompletion(course) {
-			this.updateCourseStatus({
-				id: course.id,
-				completed: course.completed,
-			});
 		},
 	},
 };
@@ -115,6 +128,7 @@ export default {
 	font-size: 14px;
 	text-align: left;
 }
+
 .course-image {
 	width: 100%;
 	height: auto;

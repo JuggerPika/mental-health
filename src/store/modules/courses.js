@@ -1,4 +1,5 @@
-import { sections } from "../../data/coursesData.js";
+// store/modules/courses.js
+import { sections } from "../../data/coursesData";
 
 const state = {
 	allCourses: sections.flatMap((section) => section.items),
@@ -9,21 +10,30 @@ const mutations = {
 		state.allCourses = courses;
 	},
 	UPDATE_COURSE_STATUS(state, { id, completed }) {
-		const course = state.allCourses.find((course) => course.id === id);
+		const course = state.allCourses.find((c) => c.id === id);
 		if (course) {
 			course.completed = completed;
 		}
 	},
 };
 
+const actions = {
+	initCourses({ commit }, courses) {
+		commit("SET_COURSES", courses);
+	},
+	updateCourseStatus({ commit }, payload) {
+		commit("UPDATE_COURSE_STATUS", payload);
+	},
+};
+
 const getters = {
-	completedCourses: (state) =>
-		state.allCourses.filter((course) => course.completed),
+	completedCourses: (state) => state.allCourses.filter((c) => c.completed),
 };
 
 export default {
 	namespaced: true,
 	state,
 	mutations,
+	actions,
 	getters,
 };

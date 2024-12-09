@@ -16,6 +16,10 @@
 import Navbar from "./components/Navbar.vue";
 import AudioBar from "./components/AudioBar.vue";
 import { Howl } from "howler";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./firebase";
+import { fetchUserCourses } from "./services/firestoreService";
+import { sections } from "./data/coursesData";
 
 export default {
 	components: {
@@ -32,7 +36,6 @@ export default {
 	methods: {
 		seekTrack(newTime) {
 			if (this.sound) {
-				console.log(`Seeking to: ${newTime}s`); // Перевірка
 				this.sound.seek(newTime); // Виконує перемотування
 				this.currentTrack.currentTime = newTime; // Оновлює поточний час треку
 			} else {
@@ -84,6 +87,23 @@ export default {
 				this.isPlaying = !this.isPlaying;
 			}
 		},
+	},
+	created() {
+		onAuthStateChanged(auth, async (user) => {
+			if (user) {
+				const fetchedCourses = await fetchUserCourses(user.uid);
+				const finalCourses =
+					fetchedCourses.length > 0
+						? fetchedCourses
+						: sections.flatMap((s) => s.items);
+				this.$store.dispatch("courses/initCourses", finalCourses);
+			} else {
+				this.$store.dispatch(
+					"courses/initCourses",
+					sections.flatMap((s) => s.items)
+				);
+			}
+		});
 	},
 };
 </script>

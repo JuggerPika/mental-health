@@ -4,6 +4,6 @@
 
 <script>
 export default {
-	name: "ResourcesView",
+	name: "WebinarsView",
 };
 </script>

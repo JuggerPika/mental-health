@@ -1,10 +1,9 @@
+// store/index.js
 import { createStore } from "vuex";
 import courses from "./modules/courses";
 
-const store = createStore({
+export default createStore({
 	modules: {
 		courses,
 	},
 });
-
-export default store;
